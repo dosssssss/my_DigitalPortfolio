@@ -3,99 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Portfolio</title>
+    <title>Bensky Abdon - Portfolio</title>
 
-    <!-- LINK CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-<header class="hero">
-    <img src="assets/img/profile.jpg" alt="Profile Picture" class="profile-img">
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <img src="assets/img/profile.jpg" alt="Profile Picture" class="profile-img">
 
-    <h1>Your Name</h1>
-    <p>IT Student | Web Developer</p>
-</header>
+        <h1>Bensky Abdon</h1>
+        <p>IT Student | Web Developer</p>
+    </header>
 
-<nav>
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#resume">Resume</a>
-    <a href="#contact">Contact</a>
-    <a href="#statement">Statement</a>
-</nav>
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+        <a href="#statement">Statement</a>
+    </nav>
 
-<section id="about">
-    <div class="card">
-        <h2>About Me</h2>
-        <p>
-            I am an IT student passionate about building systems such as payroll and tracking applications.
-            I enjoy solving real-world problems using web technologies and continuously improving my development skills.
-        </p>
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="card">
+            <h2>About Me</h2>
+
+            <p>
+                I am an IT student passionate about building systems such as payroll and tracking applications.
+                I enjoy solving real-world problems using web technologies and continuously improving my development skills.
+            </p>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+        <div class="card">
+
+            <h2>Projects</h2>
+
+            <!-- PAYROLL -->
+            <h3>Payroll Management System</h3>
+
+            <p><strong>Overview:</strong> A web-based system that manages employee records, daily time records (DTR), and payroll processing.</p>
+
+            <p><strong>Problem:</strong> Manual payroll computation can lead to errors, especially in tracking late attendance and deductions.</p>
+
+            <p><strong>Solution:</strong> The system automates salary computation, calculates late deductions based on required time-in, and archives DTR after payroll generation.</p>
+
+            <p><strong>My Role:</strong> Full-stack developer responsible for system design, database structure, and backend logic.</p>
+
+            <p><strong>Technologies Used:</strong> PHP, MySQL</p>
+
+            <hr>
+
+            <!-- E-QUICKMENT -->
+            <h3>E-Quickment Tracker</h3>
+
+            <p><strong>Overview:</strong> A web-based equipment tracking system designed to monitor and manage equipment records efficiently.</p>
+
+            <p><strong>Problem:</strong> Manual equipment monitoring can result in misplaced records, inaccurate tracking, and difficulty managing equipment availability.</p>
+
+            <p><strong>Solution:</strong> The system digitalizes equipment management by organizing records, tracking availability, and simplifying monitoring processes for users.</p>
+
+            <p><strong>My Role:</strong> Full-stack developer responsible for designing the interface, managing the database structure, and implementing backend functionalities.</p>
+
+            <p><strong>Technologies Used:</strong> HTML, CSS, PHP, MySQL</p>
+
+            <!-- PROJECT SCREENSHOTS -->
+            <div class="project-gallery">
+
+    <div class="gallery-item">
+        <img src="assets/img/loginpage.jpg"
+        alt="Login Page"
+        class="project-img">
+
+        <p class="img-caption">Login Page</p>
     </div>
-</section>
 
-<section id="projects">
-    <div class="card">
-        <h2>Projects</h2>
+    <div class="gallery-item">
+        <img src="assets/img/dashboard.jpg"
+        alt="Dashboard"
+        class="project-img">
 
-        <h3>Payroll Management System</h3>
-        <p><strong>Overview:</strong> A web-based system that manages employee records, daily time records (DTR), and payroll processing.</p>
-
-        <p><strong>Problem:</strong> Manual payroll computation can lead to errors, especially in tracking late attendance and deductions.</p>
-
-        <p><strong>Solution:</strong> The system automates salary computation, calculates late deductions based on required time-in, and archives DTR after payroll generation.</p>
-
-        <p><strong>My Role:</strong> Full-stack developer responsible for system design, database structure, and backend logic.</p>
-
-        <p><strong>Technologies Used:</strong> PHP, MySQL</p>
-
-        <hr>
-
-        <h3>Swine Tracker System</h3>
-        <p><strong>Overview:</strong> A database system designed to track swine ownership and herd records per barangay.</p>
-
-        <p><strong>Problem:</strong> Traditional record-keeping makes it difficult to monitor livestock ownership and herd distribution.</p>
-
-        <p><strong>Solution:</strong> The system organizes owner and herd data, allowing barangay users to manage records efficiently with role-based access.</p>
-
-        <p><strong>My Role:</strong> System developer responsible for implementing database relationships and user restrictions.</p>
-
-        <p><strong>Technologies Used:</strong> PHP, MySQL</p>
-
+        <p class="img-caption">Dashboard</p>
     </div>
-</section>
 
-<section id="resume">
-    <div class="card">
-        <h2>Resume</h2>
-        <p>Click below to view my resume:</p>
-        <a href="https://drive.google.com/file/d/1ie7kx9Ojogxm1wg9WcdxR-L_dN91mIn2/view?usp=drive_link" class="button">View Resume</a>
+    <div class="gallery-item">
+        <img src="assets/img/borrow_records.jpg"
+        alt="Borrow Records"
+        class="project-img">
+
+        <p class="img-caption">Borrow Records</p>
     </div>
-</section>
 
-<section id="contact">
-    <div class="card">
-        <h2>Contact</h2>
-        <p>Email: benskyabdon8@gmail.com</p>
-        <p>GitHub: yourgithub</p>
+    <div class="gallery-item">
+        <img src="assets/img/student_page.jpg"
+        alt="Student Page"
+        class="project-img">
+
+        <p class="img-caption">Student Page</p>
     </div>
-</section>
 
-<section id="statement">
-    <div class="card">
-        <h2>Statement of Originality</h2>
-        <p>
-            All projects presented in this portfolio are my original work.
-            Any sensitive data used in these systems has been handled responsibly
-            and is either anonymized or simulated for academic purposes.
-        </p>
-    </div>
-</section>
+</div>
 
-<footer>
-    © 2026 Your Name
-</footer>
+        </div>
+    </section>
+
+    <!-- RESUME -->
+    <section id="resume">
+        <div class="card">
+
+            <h2>Resume</h2>
+
+            <p>Click below to view my resume:</p>
+
+            <a href="https://drive.google.com/file/d/1ie7kx9Ojogxm1wg9WcdxR-L_dN91mIn2/view?usp=drive_link"
+            target="_blank"
+            class="button">
+                View Resume
+            </a>
+
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="card">
+
+            <h2>Contact</h2>
+
+            <p>Email: benskyabdon8@gmail.com</p>
+            <p>GitHub: dosssssss</p>
+
+        </div>
+    </section>
+
+    <!-- STATEMENT -->
+    <section id="statement">
+        <div class="card">
+
+            <h2>Statement of Originality</h2>
+
+            <p>
+                All projects presented in this portfolio are my original work.
+                Any sensitive data used in these systems has been handled responsibly
+                and is either anonymized or simulated for academic purposes.
+            </p>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 Bensky Abdon
+    </footer>
 
 </body>
 </html>
