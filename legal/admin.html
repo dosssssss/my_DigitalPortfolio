@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Primeline Legal Inbox</title>
+<link rel="icon" href="logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: brand band, summary counts, filter chips, request queue table, side drawer for "For Legal Department use" */
+:root{
+  --bg:#f4f5fb; --surface:#ffffff; --ink:#141833; --muted:#5a6085; --line:#dde0ef;
+  --brand:#2f3bd9; --brand-ink:#ffffff; --brand-soft:#e8eafd; --navy:#151c63;
+  --ok:#1f7a4d; --ok-soft:#e3f4ea; --warn:#9a5b00; --warn-soft:#fdf0d9; --new:#b4233c; --new-soft:#fde7eb;
+  --f-display:"Sora","Segoe UI",system-ui,sans-serif; --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:10px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0c0f22; --surface:#151935; --ink:#e7e9f8; --muted:#9ca2c8; --line:#2a2f57;
+  --brand:#7f8aff; --brand-ink:#0c0f22; --brand-soft:#20265a; --navy:#0a0d2b;
+  --ok:#6fd39e; --ok-soft:#173a2a; --warn:#f2b456; --warn-soft:#3b2c12; --new:#ff8a9d; --new-soft:#43182a; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+[hidden]{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.2;text-wrap:balance}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.band{background:var(--navy);color:#fff}
+.band .wrap{display:flex;gap:18px;align-items:center;padding-block:18px;flex-wrap:wrap}
+.logo{background:#fff;border-radius:8px;padding:5px 9px;display:flex}.logo img{height:38px;display:block}
+.band h1{font-size:1.4rem;font-weight:600}.band p{margin:0;color:#c9cdf5;font-size:.88rem}
+.band .right{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+main{padding-block:24px 64px;display:grid;gap:20px}
+.btn{border:1px solid var(--brand);background:var(--brand);color:var(--brand-ink);padding:9px 15px;border-radius:8px;cursor:pointer;font-weight:600}
+.btn.ghost{background:transparent;color:var(--brand)}
+.band .btn.ghost{color:#fff;border-color:#6c74c9}
+.btn.sm{padding:6px 11px;font-size:.85rem;font-weight:500}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.login{max-width:420px;margin:40px auto;display:grid;gap:14px}
+label,.lbl{font-weight:600;font-size:.88rem}
+input[type=text],input[type=password],input[type=date],select,textarea{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:10px 12px}
+textarea{min-height:100px;resize:vertical}
+.field{display:grid;gap:6px;min-width:0}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.err{color:var(--new);font-size:.88rem;margin:0}
+.hint{color:var(--muted);font-size:.85rem;margin:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.stat b{display:block;font-family:var(--f-display);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:.82rem}
+.stat.alert b{color:var(--new)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:5px 12px;cursor:pointer;font-size:.85rem}
+.chip[aria-pressed="true"]{border-color:var(--brand);color:var(--brand);background:var(--brand-soft)}
+.search{margin-left:auto;min-width:0;flex:0 1 260px}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:860px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.74rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+tbody tr{cursor:pointer}tbody tr:hover{background:var(--brand-soft)}
+tr.unseen td:first-child{box-shadow:inset 3px 0 0 var(--new)}
+.mono{font-family:var(--f-mono);font-size:.82rem;font-variant-numeric:tabular-nums}
+.sub{color:var(--muted);font-size:.82rem}
+.pill{display:inline-block;border-radius:99px;padding:2px 10px;font-size:.78rem;font-weight:600;white-space:nowrap}
+.s-New{background:var(--new-soft);color:var(--new)}
+.s-Received,.s-In-progress{background:var(--warn-soft);color:var(--warn)}
+.s-Released{background:var(--ok-soft);color:var(--ok)}
+.s-Returned{background:var(--brand-soft);color:var(--brand)}
+.empty{border:1px dashed var(--line);border-radius:var(--r);padding:28px;text-align:center;color:var(--muted)}
+.overlay{position:fixed;inset:0;background:rgba(8,10,30,.45);z-index:20;display:flex;justify-content:flex-end}
+.drawer{background:var(--surface);width:min(580px,100%);height:100%;overflow-y:auto;padding:24px 20px;display:grid;gap:16px;align-content:start}
+.kv{display:grid;grid-template-columns:150px 1fr;gap:8px 14px;font-size:.9rem;margin:0}
+.kv dt{color:var(--muted)}.kv dd{margin:0;min-width:0;overflow-wrap:anywhere;white-space:pre-wrap}
+.legaluse{border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;background:var(--bg)}
+.eyebrow{font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.check{display:flex;gap:8px;align-items:center;font-size:.9rem}
+.check input{accent-color:var(--brand)}
+.toast{position:fixed;right:16px;bottom:16px;background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:8px;z-index:30;max-width:340px;font-size:.9rem}
+a{color:var(--brand)}
+@media (max-width:560px){.kv{grid-template-columns:1fr}.band .right{margin-left:0}}
+</style>
+</head>
+<body>
+<header class="band"><div class="wrap">
+  <div class="logo"><img src="logo.jpeg" alt="Primeline"></div>
+  <div><h1>Legal Inbox</h1><p>Legal Request Forms submitted online</p></div>
+  <div class="right" id="topActions" hidden>
+    <span class="sub" style="color:#c9cdf5" id="lastSync"></span>
+    <button class="btn ghost sm" id="refresh">Refresh</button>
+    <button class="btn ghost sm" id="logout">Sign out</button>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <div class="card" id="notSetup" hidden>
+    <h2 style="font-size:1.2rem">The request list isn't connected yet</h2>
+    <p class="hint" style="margin-top:8px">This page needs the Legal Google Sheet web app address. Until it's set, online requests only arrive by email.</p>
+  </div>
+
+  <form class="card login" id="login" hidden>
+    <h2 style="font-size:1.25rem">Legal officer sign in</h2>
+    <p class="hint">Enter the Legal team password to see and update requests.</p>
+    <div class="field"><label for="pw">Password</label><input type="password" id="pw" autocomplete="current-password"></div>
+    <p class="err" id="loginErr" hidden></p>
+    <button class="btn" type="submit" id="loginBtn">Sign in</button>
+  </form>
+
+  <section id="app" hidden style="display:grid;gap:20px">
+    <div class="stats" id="stats"></div>
+    <div class="toolbar"><div id="chips" class="toolbar"></div><input type="text" class="search" id="q" placeholder="Search name, company, LRF No." aria-label="Search"></div>
+    <div id="list"></div>
+  </section>
+</main>
+
+<div class="overlay" id="overlay" hidden><aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Request details"></aside></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+/* ===== SETTINGS ===== */
+const SCRIPT_URL = "";   // Legal Google Sheet web app URL (same as on the customer page)
+
+const STATUSES=["New","Received","In progress","Released","Returned"];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const cls=s=>"s-"+String(s).replace(/\s+/g,"-");
+function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,4500)}
+function ls(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function ss(k,v){try{if(v===undefined)return sessionStorage.getItem(k);if(v===null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v)}catch(e){return null}}
+const fmtD=d=>{if(!d)return "—";const x=new Date(d.length<=10?d+"T00:00:00":d.replace(" ","T"));return isNaN(x)?d:x.toLocaleDateString("en-PH",{dateStyle:"medium"})};
+
+let password=ss("lrf_pw"), requests=[], filter="Open", query="", seen=new Set(ls("lrf_admin_seen")||[]), known=null, timer=null;
+
+async function api(body){
+  const r=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(body)});
+  return r.json();
+}
+async function load(silent){
+  try{
+    const j=await api({action:"list",password});
+    if(!j.ok){ if(j.error==="wrong_password"){signOut("That password isn't correct.");return false} throw new Error(j.error) }
+    requests=j.requests.reverse();
+    const ids=new Set(requests.map(r=>r.lrfNo));
+    if(known){const fresh=requests.filter(r=>!known.has(r.lrfNo));if(fresh.length)toast(`${fresh.length} new request${fresh.length>1?"s":""}: ${fresh[0].requestor} (${fresh[0].department})`)}
+    else if(!ls("lrf_admin_seen")){/* first visit: everything shows as unread */}
+    known=ids; render();
+    $("#lastSync").textContent="Updated "+new Date().toLocaleTimeString("en-PH",{hour:"numeric",minute:"2-digit"});
+    return true;
+  }catch(e){ if(!silent) toast("Couldn't load requests. Check your connection and press Refresh."); return false }
+}
+function render(){
+  const open=requests.filter(r=>!["Released","Returned"].includes(r.status));
+  const unseen=requests.filter(r=>!seen.has(r.lrfNo)).length;
+  $("#stats").innerHTML=`
+    <div class="stat ${unseen?"alert":""}"><b>${unseen}</b><span>Unread</span></div>
+    <div class="stat"><b>${requests.filter(r=>r.status==="New").length}</b><span>Awaiting receipt</span></div>
+    <div class="stat"><b>${open.length}</b><span>Open</span></div>
+    <div class="stat"><b>${requests.filter(r=>r.status==="Released").length}</b><span>Released</span></div>`;
+  document.title=(unseen?`(${unseen}) `:"")+"Primeline Legal Inbox";
+  const counts={Open:open.length,All:requests.length};STATUSES.forEach(s=>counts[s]=requests.filter(r=>r.status===s).length);
+  $("#chips").innerHTML=["Open",...STATUSES,"All"].map(f=>`<button class="chip" aria-pressed="${filter===f}" data-f="${f}">${f} · ${counts[f]}</button>`).join("");
+  $("#chips").querySelectorAll(".chip").forEach(c=>c.onclick=()=>{filter=c.dataset.f;render()});
+  let rows=filter==="Open"?open:filter==="All"?requests:requests.filter(r=>r.status===filter);
+  if(query){const q=query.toLowerCase();rows=rows.filter(r=>[r.lrfNo,r.requestor,r.project,r.department,r.email].join(" ").toLowerCase().includes(q))}
+  const el=$("#list");
+  if(!rows.length){el.innerHTML=`<div class="empty">${requests.length?"No requests match.":"No requests yet. New online requests appear here automatically."}</div>`;return}
+  el.innerHTML=`<div class="tablewrap"><table><thead><tr><th>LRF No.</th><th>Requestor</th><th>Request</th><th>Project / Company</th><th>Submitted</th><th>Needed by</th><th>Status</th></tr></thead><tbody>
+  ${rows.map(r=>{const u=!seen.has(r.lrfNo);return `<tr class="${u?"unseen":""}" data-id="${esc(r.lrfNo)}">
+    <td class="mono">${esc(r.lrfNo)}${u?`<div><span class="pill s-New" style="margin-top:4px">Unread</span></div>`:""}</td>
+    <td>${esc(r.requestor)}<div class="sub">${esc(r.department)}</div></td>
+    <td>${esc(r.request)}</td><td>${esc(r.project)}</td>
+    <td>${esc(r.submitted)}${r.afterCutoff==="Yes"?`<div class="sub">After 6 PM · next working day</div>`:""}</td>
+    <td>${fmtD(r.dateNeeded)}</td>
+    <td><span class="pill ${cls(r.status)}">${esc(r.status)}</span>${r.dateReleased?`<div class="sub">Released ${fmtD(r.dateReleased)}</div>`:""}</td></tr>`}).join("")}
+  </tbody></table></div>`;
+  el.querySelectorAll("tbody tr").forEach(tr=>tr.onclick=()=>openDrawer(tr.dataset.id));
+}
+function openDrawer(id){
+  const r=requests.find(x=>x.lrfNo===id);if(!r)return;
+  if(!seen.has(id)){seen.add(id);ls("lrf_admin_seen",[...seen]);render()}
+  const ref=/^https?:\/\//i.test(r.reference)?`<a href="${esc(r.reference)}" target="_blank" rel="noopener">${esc(r.reference)}</a>`:esc(r.reference||"—");
+  $("#drawer").innerHTML=`
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:start">
+      <div><div class="eyebrow">Legal Request Form</div><h2 class="mono" style="font-size:1.15rem;margin-top:4px">${esc(r.lrfNo)}</h2></div>
+      <button class="btn ghost sm" id="dClose">Close</button></div>
+    <div><span class="pill ${cls(r.status)}">${esc(r.status)}</span></div>
+    <dl class="kv">
+      <dt>Requestor</dt><dd>${esc(r.requestor)}</dd>
+      <dt>Email</dt><dd>${esc(r.email)}</dd>
+      <dt>Department</dt><dd>${esc(r.department)}</dd>
+      <dt>Project / Company</dt><dd>${esc(r.project)}</dd>
+      <dt>Request</dt><dd>${esc(r.request)}</dd>
+      <dt>Purpose / details</dt><dd>${esc(r.purpose)}</dd>
+      <dt>Supporting docs</dt><dd>${ref}</dd>
+      <dt>Requestor's head</dt><dd>${esc(r.head)}</dd>
+      <dt>Date needed</dt><dd>${fmtD(r.dateNeeded)}</dd>
+      <dt>Submitted</dt><dd>${esc(r.submitted)}${r.afterCutoff==="Yes"?" (after 6 PM, counts as next working day)":""}</dd>
+    </dl>
+    <div class="legaluse">
+      <div class="eyebrow">For Legal Department use</div>
+      <div class="row">
+        <div class="field"><label for="d_status">Status</label><select id="d_status">${STATUSES.map(s=>`<option ${s===r.status?"selected":""}>${s}</option>`).join("")}</select></div>
+        <div class="field"><label for="d_by">Received by</label><input type="text" id="d_by" value="${esc(r.receivedBy||ls("lrf_admin_name")||"")}"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="d_rel">Date released</label><input type="date" id="d_rel" value="${esc(r.dateReleased)}"></div>
+        <div class="field"><span class="lbl">Received on</span><span class="hint">${r.receivedOn?esc(r.receivedOn):"Filled in when status moves past New"}</span></div>
+      </div>
+      <div class="field"><label for="d_com">Comments</label><textarea id="d_com" placeholder="Shared with the customer if you email them below">${esc(r.comments)}</textarea></div>
+      <label class="check"><input type="checkbox" id="d_notify" checked> Email the customer about this update</label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="d_save">Save</button>
+        ${r.status==="New"?`<button class="btn ghost" id="d_recv">Confirm receipt</button>`:""}
+      </div>
+    </div>`;
+  $("#overlay").hidden=false;
+  $("#dClose").onclick=closeDrawer;
+  const save=async(force)=>{
+    const btn=$("#d_save");btn.disabled=true;btn.textContent="Saving…";
+    const body={action:"update",password,lrfNo:id,status:force||$("#d_status").value,receivedBy:$("#d_by").value.trim(),
+      comments:$("#d_com").value.trim(),dateReleased:$("#d_rel").value,notify:$("#d_notify").checked};
+    ls("lrf_admin_name",body.receivedBy);
+    try{const j=await api(body);if(!j.ok)throw new Error(j.error);
+      Object.assign(r,j.request);render();closeDrawer();toast(`${id} saved as ${j.request.status}${body.notify?" · customer emailed":""}`)}
+    catch(e){btn.disabled=false;btn.textContent="Save";toast("That didn't save. Check your connection and try again.")}
+  };
+  $("#d_save").onclick=()=>save();
+  const rc=$("#d_recv");if(rc)rc.onclick=()=>save("Received");
+}
+function closeDrawer(){$("#overlay").hidden=true}
+$("#overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closeDrawer()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer()});
+$("#q").addEventListener("input",e=>{query=e.target.value.trim();render()});
+$("#refresh").onclick=()=>load();
+$("#logout").onclick=()=>signOut();
+
+function signOut(msg){password=null;ss("lrf_pw",null);clearInterval(timer);$("#app").hidden=true;$("#topActions").hidden=true;$("#login").hidden=false;
+  const e=$("#loginErr");e.hidden=!msg;e.textContent=msg||"";}
+async function enter(){
+  $("#login").hidden=true;$("#app").hidden=false;$("#topActions").hidden=false;
+  $("#list").innerHTML=`<div class="empty">Loading requests…</div>`;
+  if(await load()){clearInterval(timer);timer=setInterval(()=>load(true),60000)}
+}
+$("#login").addEventListener("submit",async e=>{
+  e.preventDefault();const pw=$("#pw").value;if(!pw)return;
+  const b=$("#loginBtn");b.disabled=true;b.textContent="Signing in…";
+  try{const j=await api({action:"list",password:pw});
+    if(!j.ok){$("#loginErr").textContent=j.error==="wrong_password"?"That password isn't correct.":"Couldn't sign in. Try again.";$("#loginErr").hidden=false;return}
+    password=pw;ss("lrf_pw",pw);$("#pw").value="";enter();
+  }catch(err){$("#loginErr").textContent="Couldn't reach the request list. Check your connection.";$("#loginErr").hidden=false}
+  finally{b.disabled=false;b.textContent="Sign in"}
+});
+
+if(!SCRIPT_URL){$("#notSetup").hidden=false}
+else if(password){enter()}
+else{$("#login").hidden=false}
+</script>
+</body>
+</html>

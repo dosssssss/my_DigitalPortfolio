@@ -92,12 +92,13 @@ footer{border-top:1px solid var(--line);padding-block:20px;color:var(--muted);fo
   <div id="formArea" hidden></div>
 </main>
 
-<footer><div class="wrap">Legal and Compliance Department · Primeline Philippines Incorporated · <span class="mono" id="mailText"></span></div></footer>
+<footer><div class="wrap">Legal and Compliance Department · Primeline Philippines Incorporated · <span class="mono" id="mailText"></span> · <a href="admin.html" style="color:inherit">Legal staff sign in</a></div></footer>
 
 <script>
 /* ===== SETTINGS ===== */
 const LEGAL_EMAIL = "riza.lodea@primeline.ph";        // receives every online request
 const PAPER_EMAIL = "compliance.bpic@primeline.ph";   // where customers email the downloaded form
+const SCRIPT_URL  = "";                                 // Legal Google Sheet web app URL (Apps Script). Empty = email-only mode
 const FORM_FILE   = "Legal-Request-Form-LRF.docx";          // downloadable form
 
 const SERVICES = [
@@ -186,11 +187,21 @@ async function submit(boxes){
     "Requestor's head":v("f_head"), "Supporting documents":v("f_ref")||"—"
   };
   try{
-    const r=await fetch("https://formsubmit.co/ajax/"+LEGAL_EMAIL,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload)});
-    const j=await r.json().catch(()=>({}));
-    if(!r.ok||String(j.success)==="false")throw new Error(j.message||"failed");
+    let no2=no;
+    if(SCRIPT_URL){ // saves to the Legal Google Sheet and emails Legal + the customer
+      const request={requestor:v("f_name"),email:v("f_email"),department:v("f_dept"),project:v("f_proj"),request:reqText,
+        purpose:v("f_purpose"),dateNeeded:v("f_need"),head:v("f_head"),reference:v("f_ref")};
+      const r=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"submit",request})});
+      const j=await r.json();
+      if(!j.ok)throw new Error(j.error||"failed");
+      no2=j.lrfNo;
+    } else {
+      const r=await fetch("https://formsubmit.co/ajax/"+LEGAL_EMAIL,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload)});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok||String(j.success)==="false")throw new Error(j.message||"failed");
+    }
     $("#formArea").innerHTML=`<div class="done"><h3>Request submitted to the Legal and Compliance Department.</h3>
-      <div>Your LRF number: <b class="mono">${esc(no)}</b></div>
+      <div>Your LRF number: <b class="mono">${esc(no2)}</b></div>
       <p class="hint">A confirmation has been sent to ${esc(v("f_email"))}. ${after?"It was submitted after 6:00 PM, so it counts as received the next working day. ":""}Turnaround starts once Legal confirms receipt.</p>
       <div class="actions"><button class="btn ghost" id="another">Submit another request</button></div></div>`;
     $("#another").onclick=()=>{$("#formArea").hidden=true;$("#detail").hidden=true;selected=null;renderGrid();scrollTo({top:0})};
