@@ -97,6 +97,7 @@ footer{border-top:1px solid var(--line);padding-block:20px;color:var(--muted);fo
 <script>
 /* ===== SETTINGS ===== */
 const LEGAL_EMAIL = "riza.lodea@primeline.ph";        // receives every online request
+const PAPER_EMAIL = "compliance.bpic@primeline.ph";   // where customers email the downloaded form
 const FORM_FILE   = "Legal-Request-Form-LRF.docx";          // downloadable form
 
 const SERVICES = [
@@ -114,7 +115,7 @@ const svcName=id=>(SERVICES.find(s=>s.id===id)||{}).name||id;
 const ICON_DL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>';
 const ICON_SEND='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14m0 0-6-6m6 6-6 6"/></svg>';
 let selected=null;
-$("#mailText").textContent=LEGAL_EMAIL;
+$("#mailText").textContent=PAPER_EMAIL;
 
 function manila(){const p=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Manila",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date());const g=t=>p.find(x=>x.type===t).value;return{ymd:`${g("year")}${g("month")}${g("day")}`,hour:+g("hour")%24,text:`${g("year")}-${g("month")}-${g("day")} ${g("hour")%24}:${g("minute")}`}}
 function lrfNo(){const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let r="";for(let i=0;i<4;i++)r+=c[Math.floor(Math.random()*c.length)];return `LRF-${manila().ymd}-${r}`}
@@ -129,7 +130,7 @@ function selectService(id){
   <div class="row"><div><div class="lbl">Standard turnaround</div>${s.tats?`<ul>${s.tats.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:`<p class="hint" style="font-size:.95rem">${esc(s.tat)}</p>`}<p class="hint" style="margin-top:6px">Counting starts when Legal confirms receipt of your LRF.</p></div>
   <div><div class="lbl">Have these ready</div><ul>${s.bring.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div></div>
   <div class="actions"><button class="btn" id="goOnline">${ICON_SEND} Request online</button><a class="btn ghost" href="${FORM_FILE}" download>${ICON_DL} Download request form (.docx)</a></div>
-  <p class="hint">Prefer the paper form? Download it, fill it in, have your head sign it, and email it to <b>${LEGAL_EMAIL}</b>.</p>`;
+  <p class="hint">Prefer the paper form? Download it, fill it in, have your head sign it, and email it to <b>${PAPER_EMAIL}</b>.</p>`;
   $("#goOnline").onclick=()=>openForm(id);
   d.scrollIntoView({behavior:"smooth",block:"start"});
 }
@@ -195,7 +196,7 @@ async function submit(boxes){
     $("#another").onclick=()=>{$("#formArea").hidden=true;$("#detail").hidden=true;selected=null;renderGrid();scrollTo({top:0})};
   }catch(e){
     btn.disabled=false;btn.innerHTML=ICON_SEND+" Submit request";err.hidden=false;
-    err.textContent="Your request didn't go through. Check your connection and try again, or download the form and email it to "+LEGAL_EMAIL+".";
+    err.textContent="Your request didn't go through. Check your connection and try again, or download the form and email it to "+PAPER_EMAIL+".";
   }
 }
 renderGrid();
