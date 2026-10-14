@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Primeline Legal Requests</title>
+<meta name="description" content="Request legal and compliance services from Primeline Philippines Incorporated.">
+<link rel="icon" href="logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* ===== SETTINGS ===== the inbox that receives every online request */
+:root{
+  --bg:#f4f5fb; --surface:#ffffff; --ink:#141833; --muted:#5a6085; --line:#dde0ef;
+  --brand:#2f3bd9; --brand-ink:#ffffff; --brand-soft:#e8eafd; --navy:#151c63;
+  --ok:#1f7a4d; --ok-soft:#e3f4ea; --err:#b4233c;
+  --f-display:"Sora","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:10px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0c0f22; --surface:#151935; --ink:#e7e9f8; --muted:#9ca2c8; --line:#2a2f57;
+  --brand:#7f8aff; --brand-ink:#0c0f22; --brand-soft:#20265a; --navy:#0a0d2b;
+  --ok:#6fd39e; --ok-soft:#173a2a; --err:#ff8a9d; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+img{max-width:100%}
+[hidden]{display:none!important}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.band{background:var(--navy);color:#fff}
+.band .wrap{display:flex;gap:20px;align-items:center;padding-block:22px;flex-wrap:wrap}
+.logo{background:#fff;border-radius:8px;padding:6px 10px;display:flex}
+.logo img{height:46px;width:auto;display:block}
+.band h1{font-size:clamp(1.3rem,3vw,1.75rem);font-weight:600}
+.band p{margin:2px 0 0;color:#c9cdf5;font-size:.92rem}
+main{padding-block:28px 64px;display:grid;gap:28px}
+.eyebrow{font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.lead{color:var(--muted);max-width:62ch;margin:6px 0 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.svc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;text-align:left;cursor:pointer;display:grid;gap:8px;align-content:start;transition:border-color .15s}
+.svc:hover{border-color:var(--brand)}
+.svc[aria-pressed="true"]{border-color:var(--brand);box-shadow:0 0 0 2px var(--brand) inset}
+.svc h3{font-size:1.02rem;font-weight:600}
+.svc p{margin:0;color:var(--muted);font-size:.9rem}
+.tat{font-family:var(--f-mono);font-size:.78rem;color:var(--brand);background:var(--brand-soft);border-radius:6px;padding:3px 8px;justify-self:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:grid;gap:16px}
+.panel h2{font-size:1.3rem;font-weight:600}
+.panel ul{margin:0;padding-left:20px;color:var(--muted)}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--brand);background:var(--brand);color:var(--brand-ink);padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:600;display:inline-flex;gap:8px;align-items:center;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--brand)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn svg{width:16px;height:16px}
+.hint{font-size:.85rem;color:var(--muted);margin:0}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.field{display:grid;gap:6px;min-width:0}
+label,.lbl{font-weight:600;font-size:.88rem}
+.req::after{content:" *";color:var(--err)}
+input[type=text],input[type=email],input[type=date],select,textarea{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:10px 12px}
+textarea{min-height:110px;resize:vertical}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
+.check{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer;font-weight:500;font-size:.9rem}
+.check input{margin-top:4px;accent-color:var(--brand)}
+.check:has(input:checked){border-color:var(--brand);background:var(--brand-soft)}
+.err{color:var(--err);font-size:.88rem;margin:0}
+.notes{border-top:1px dashed var(--line);padding-top:14px;font-size:.84rem;color:var(--muted);display:grid;gap:4px}
+.done{background:var(--ok-soft);border:1px solid var(--ok);border-radius:var(--r);padding:18px;display:grid;gap:8px}
+.done h3{color:var(--ok);font-size:1.05rem}
+.mono{font-family:var(--f-mono)}
+.hp{position:absolute;left:-9999px}
+footer{border-top:1px solid var(--line);padding-block:20px;color:var(--muted);font-size:.84rem}
+</style>
+</head>
+<body>
+<header class="band"><div class="wrap">
+  <div class="logo"><img src="logo.jpeg" alt="Primeline Philippines Incorporated"></div>
+  <div><h1>Legal &amp; Compliance Requests</h1><p>Submit a Legal Request Form (LRF) online or download it to fill in.</p></div>
+</div></header>
+
+<main class="wrap">
+  <section>
+    <div class="eyebrow">Step 1</div>
+    <h2 style="font-size:1.4rem;margin-top:4px">Choose the service you need</h2>
+    <p class="lead">One LRF per project or company. Pick a service to see its turnaround time, download the form, or request it online.</p>
+  </section>
+  <div class="grid" id="grid"></div>
+  <div class="panel" id="detail" hidden></div>
+  <div id="formArea" hidden></div>
+</main>
+
+<footer><div class="wrap">Legal and Compliance Department · Primeline Philippines Incorporated · <span class="mono" id="mailText"></span></div></footer>
+
+<script>
+/* ===== SETTINGS ===== */
+const LEGAL_EMAIL = "riza.lodea@primeline.ph";        // receives every online request
+const FORM_FILE   = "Legal-Request-Form-LRF.docx";          // downloadable form
+
+const SERVICES = [
+  {id:"contract",name:"Contract Review / Drafting",tat:"5–10 working days",blurb:"Review, revision or drafting of contracts and agreements.",bring:["Draft contract or the other party's version, if any","Key commercial terms and deadlines","Counterparty details"]},
+  {id:"opinion",name:"Request for Legal Opinion / Research",tat:"5–10 working days",blurb:"A written legal opinion or research on a specific question.",bring:["The exact question to be answered","Background facts and related documents"]},
+  {id:"special",name:"Special Projects",tat:"To be determined",blurb:"Legal support for projects outside routine requests.",bring:["Project brief and timeline","People involved and expected deliverables"]},
+  {id:"corporate",name:"Secretary's Certificate / Board Resolution / Certification / Letters / Affidavits",tat:"3–10 working days",blurb:"Corporate documents and notarial requirements.",bring:["Purpose and the agency or party requiring it","Exact wording or format required, if prescribed"],tats:["Secretary's Certificate / Certification: 3 working days","Board Resolution: 5 working days","Letters, Affidavits and other legal documents: 5–10 working days"],subtypes:["Secretary's Certificate","Board Resolution","Certification","Letter","Affidavit"]},
+  {id:"compliance",name:"Compliance Document/s (SEC, BIR, LGUs, etc.)",tat:"2 days",blurb:"Copies of compliance and legal documents on file, if available.",bring:["Which documents and for which company","Where and why they will be submitted"]},
+  {id:"other",name:"Other Requests",tat:"To be determined",blurb:"Anything else the Legal and Compliance Department can help with.",bring:["A clear description of what you need"]},
+];
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const svcName=id=>(SERVICES.find(s=>s.id===id)||{}).name||id;
+const ICON_DL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>';
+const ICON_SEND='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14m0 0-6-6m6 6-6 6"/></svg>';
+let selected=null;
+$("#mailText").textContent=LEGAL_EMAIL;
+
+function manila(){const p=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Manila",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date());const g=t=>p.find(x=>x.type===t).value;return{ymd:`${g("year")}${g("month")}${g("day")}`,hour:+g("hour")%24,text:`${g("year")}-${g("month")}-${g("day")} ${g("hour")%24}:${g("minute")}`}}
+function lrfNo(){const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let r="";for(let i=0;i<4;i++)r+=c[Math.floor(Math.random()*c.length)];return `LRF-${manila().ymd}-${r}`}
+
+function renderGrid(){
+  $("#grid").innerHTML=SERVICES.map(s=>`<button class="svc" data-id="${s.id}" aria-pressed="${selected===s.id}"><h3>${esc(s.name)}</h3><p>${esc(s.blurb)}</p><span class="tat">${esc(s.tat)}</span></button>`).join("");
+  $("#grid").querySelectorAll(".svc").forEach(b=>b.onclick=()=>selectService(b.dataset.id));
+}
+function selectService(id){
+  selected=id;renderGrid();const s=SERVICES.find(x=>x.id===id);const d=$("#detail");d.hidden=false;$("#formArea").hidden=true;
+  d.innerHTML=`<div><div class="eyebrow">Step 2</div><h2 style="margin-top:4px">${esc(s.name)}</h2></div>
+  <div class="row"><div><div class="lbl">Standard turnaround</div>${s.tats?`<ul>${s.tats.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:`<p class="hint" style="font-size:.95rem">${esc(s.tat)}</p>`}<p class="hint" style="margin-top:6px">Counting starts when Legal confirms receipt of your LRF.</p></div>
+  <div><div class="lbl">Have these ready</div><ul>${s.bring.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div></div>
+  <div class="actions"><button class="btn" id="goOnline">${ICON_SEND} Request online</button><a class="btn ghost" href="${FORM_FILE}" download>${ICON_DL} Download request form (.docx)</a></div>
+  <p class="hint">Prefer the paper form? Download it, fill it in, have your head sign it, and email it to <b>${LEGAL_EMAIL}</b>.</p>`;
+  $("#goOnline").onclick=()=>openForm(id);
+  d.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function openForm(id){
+  const a=$("#formArea");a.hidden=false;const today=new Date().toISOString().slice(0,10);
+  a.innerHTML=`<form class="panel" id="lrf" novalidate>
+   <div><div class="eyebrow">Step 3</div><h2 style="margin-top:4px">Legal Request Form</h2><p class="hint">Fields marked * are required. Legal will not accept LRFs with incomplete details.</p></div>
+   <div class="row"><div class="field"><label class="req" for="f_name">Requestor</label><input type="text" id="f_name" autocomplete="name"></div>
+     <div class="field"><label class="req" for="f_email">Your email</label><input type="email" id="f_email" autocomplete="email" placeholder="Where Legal can reply to you"></div></div>
+   <div class="row"><div class="field"><label class="req" for="f_dept">Department</label><input type="text" id="f_dept"></div>
+     <div class="field"><label class="req" for="f_proj">Project / Company</label><input type="text" id="f_proj" placeholder="One LRF per project or company"></div></div>
+   <div class="field"><span class="lbl req">Specific request needed</span><div class="checks" id="f_svcs">${SERVICES.map(x=>`<label class="check"><input type="checkbox" value="${x.id}" ${x.id===id?"checked":""}> ${esc(x.name)}</label>`).join("")}</div></div>
+   <div class="field" id="subWrap" ${id==="corporate"?"":"hidden"}><label for="f_sub">Corporate document type</label><select id="f_sub"><option value="">Select…</option>${SERVICES[3].subtypes.map(t=>`<option>${esc(t)}</option>`).join("")}</select></div>
+   <div class="field" id="otherWrap" ${id==="other"?"":"hidden"}><label class="req" for="f_other">Other request (please specify)</label><input type="text" id="f_other"></div>
+   <div class="field"><label class="req" for="f_purpose">Purpose / other details</label><textarea id="f_purpose" placeholder="What you need, why, and any deadlines or agencies involved."></textarea></div>
+   <div class="row"><div class="field"><label class="req" for="f_need">Date needed</label><input type="date" id="f_need" min="${today}"></div>
+     <div class="field"><label class="req" for="f_head">Requestor's head (approver)</label><input type="text" id="f_head" placeholder="Name of your department head"></div></div>
+   <div class="field"><label for="f_ref">Supporting documents link</label><input type="text" id="f_ref" placeholder="Google Drive / OneDrive link (optional)"></div>
+   <input type="text" class="hp" id="f_hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+   <label class="check" style="font-weight:500"><input type="checkbox" id="f_ok"> I confirm my department head has approved this request and the details are complete.</label>
+   <p class="err" id="f_err" role="alert" hidden></p>
+   <div class="actions"><button class="btn" type="submit" id="f_submit">${ICON_SEND} Submit request</button><button class="btn ghost" type="button" id="f_cancel">Cancel</button></div>
+   <div class="notes"><span>Requests submitted after <b>6:00 PM</b> are counted as received the next working day.</span><span>Turnaround may be extended if signatories are unavailable on the date of request.</span></div>
+  </form>`;
+  const boxes=()=>[...a.querySelectorAll("#f_svcs input")];
+  boxes().forEach(c=>c.onchange=()=>{const v=boxes().filter(x=>x.checked).map(x=>x.value);$("#subWrap").hidden=!v.includes("corporate");$("#otherWrap").hidden=!v.includes("other")});
+  $("#f_cancel").onclick=()=>a.hidden=true;
+  $("#lrf").onsubmit=e=>{e.preventDefault();submit(boxes)};
+  a.scrollIntoView({behavior:"smooth",block:"start"});
+}
+async function submit(boxes){
+  const v=k=>$("#"+k).value.trim();const err=$("#f_err");
+  const services=boxes().filter(x=>x.checked).map(x=>x.value);const miss=[];
+  if(!v("f_name"))miss.push("requestor");
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("f_email")))miss.push("a valid email");
+  if(!v("f_dept"))miss.push("department");if(!v("f_proj"))miss.push("project/company");
+  if(!services.length)miss.push("at least one request type");
+  if(services.includes("other")&&!v("f_other"))miss.push("the other request");
+  if(!v("f_purpose"))miss.push("purpose/details");if(!v("f_need"))miss.push("date needed");if(!v("f_head"))miss.push("requestor's head");
+  if(miss.length){err.textContent="Please add: "+miss.join(", ")+".";err.hidden=false;return}
+  if(!$("#f_ok").checked){err.textContent="Please confirm your department head has approved this request.";err.hidden=false;return}
+  if(v("f_hp"))return;
+  err.hidden=true;const btn=$("#f_submit");btn.disabled=true;btn.textContent="Submitting…";
+  const no=lrfNo();const m=manila();const after=m.hour>=18;
+  const reqText=services.map(s=>svcName(s)+(s==="corporate"&&v("f_sub")?` (${v("f_sub")})`:"")+(s==="other"?`: ${v("f_other")}`:"")).join("; ");
+  const payload={
+    _subject:`New LRF ${no} – ${v("f_proj")} (${v("f_dept")})`,
+    _template:"table", _captcha:"false",
+    _autoresponse:`Thank you. Your Legal Request Form ${no} has been received by the Legal and Compliance Department of Primeline Philippines Incorporated. Turnaround time starts once Legal confirms receipt.${after?" Your request was submitted after 6:00 PM, so it counts as received the next working day.":""}`,
+    "LRF No.":no, "Date & time submitted":m.text+" (Manila)"+(after?" – after 6 PM, counts as next working day":""),
+    "Requestor":v("f_name"), email:v("f_email"), "Department":v("f_dept"), "Project / Company":v("f_proj"),
+    "Request needed":reqText, "Purpose / other details":v("f_purpose"), "Date needed":v("f_need"),
+    "Requestor's head":v("f_head"), "Supporting documents":v("f_ref")||"—"
+  };
+  try{
+    const r=await fetch("https://formsubmit.co/ajax/"+LEGAL_EMAIL,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload)});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||String(j.success)==="false")throw new Error(j.message||"failed");
+    $("#formArea").innerHTML=`<div class="done"><h3>Request submitted to the Legal and Compliance Department.</h3>
+      <div>Your LRF number: <b class="mono">${esc(no)}</b></div>
+      <p class="hint">A confirmation has been sent to ${esc(v("f_email"))}. ${after?"It was submitted after 6:00 PM, so it counts as received the next working day. ":""}Turnaround starts once Legal confirms receipt.</p>
+      <div class="actions"><button class="btn ghost" id="another">Submit another request</button></div></div>`;
+    $("#another").onclick=()=>{$("#formArea").hidden=true;$("#detail").hidden=true;selected=null;renderGrid();scrollTo({top:0})};
+  }catch(e){
+    btn.disabled=false;btn.innerHTML=ICON_SEND+" Submit request";err.hidden=false;
+    err.textContent="Your request didn't go through. Check your connection and try again, or download the form and email it to "+LEGAL_EMAIL+".";
+  }
+}
+renderGrid();
+</script>
+</body>
+</html>
